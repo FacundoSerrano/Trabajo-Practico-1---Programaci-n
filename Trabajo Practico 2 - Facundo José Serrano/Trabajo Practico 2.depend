@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1526692366 source:c:\program files\test\trabajo practico 2\lib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib.h"
+
+1526692802 c:\program files\test\trabajo practico 2\lib.h
+
+1526692360 source:c:\program files\test\trabajo practico 2\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lib.h"
+
