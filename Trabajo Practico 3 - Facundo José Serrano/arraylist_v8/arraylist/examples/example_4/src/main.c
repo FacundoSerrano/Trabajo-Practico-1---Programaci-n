@@ -34,12 +34,12 @@ int main(void)
         //startTesting(4);//al_len
         //startTesting(5);//al_get
         //startTesting(6);//al_contains
-        startTesting(7);//al_set
-        //startTesting(8);
-        //startTesting(9);
-        //startTesting(10);
-        //startTesting(11);
-        //startTesting(12);
+        //startTesting(7);//al_set
+        //startTesting(8);//al_remove
+        //startTesting(9);//al_clear
+        //startTesting(10);//al_clone
+        startTesting(11);//al_push
+        //startTesting(12);//al_indexOf
         //startTesting(13);
         //startTesting(14);
         //startTesting(15);

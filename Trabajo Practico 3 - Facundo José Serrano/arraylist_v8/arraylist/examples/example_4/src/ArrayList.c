@@ -26,7 +26,7 @@ ArrayList* al_newArrayList(void)
 
     if(this != NULL)
     {
-        pElements = malloc(sizeof(void *)*AL_INITIAL_VALUE );
+        pElements = malloc(sizeof(void *)*AL_INITIAL_VALUE);
         if(pElements != NULL)
         {
             this->size=0;
@@ -136,7 +136,7 @@ void* al_get(ArrayList* this, int index)
 
     if(this != NULL)
     {
-        if(index >= 0 && index < this->size)
+        if(index >= 0 && index < this->len(this)) //this->size)
         {
             returnAux = *(this->pElements+index);
         }
@@ -162,9 +162,9 @@ int al_contains(ArrayList* this, void* pElement)
 
     if(this != NULL && pElement != NULL)
     {
-        for(i = 0; i < this->size; i++)
+        for(i = 0; i < this->len(this); i++)
         {
-            if(*(this->pElements+i) == pElement)
+            if(this->get(this, i) == pElement)
             {
                 flag = 1;
                 break;
@@ -191,9 +191,9 @@ int al_set(ArrayList* this, int index, void* pElement)
 
     if(this != NULL && pElement != NULL)
     {
-        if(index >= 0 && index <= this->size)
+        if(index >= 0 && index <= this->len(this))
         {
-            if(index == this->size)
+            if(index == this->len(this))
             {
                 al_add(this, pElement);
             }
@@ -218,6 +218,23 @@ int al_set(ArrayList* this, int index, void* pElement)
 int al_remove(ArrayList* this,int index)
 {
     int returnAux = -1;
+    int i;
+
+    if(this != NULL)
+    {
+        if(index >= 0 && index <= this->len(this))
+        {
+            if(index != this->len(this))
+            {
+                for(i = index; i < this->len(this)-1; i++)
+                {
+                    *(this->pElements+i) = *(this->pElements+(i+1));
+                }
+            }
+            (this->size)--;
+            returnAux = 0;
+        }
+    }
 
     return returnAux;
 }
@@ -233,6 +250,15 @@ int al_clear(ArrayList* this)
 {
     int returnAux = -1;
 
+    if(this != NULL)
+    {
+        this->size = 0;
+        this->reservedSize = AL_INITIAL_VALUE;
+        free(this->pElements);
+        (void**) realloc(this->pElements,sizeof(void*) * this->reservedSize);
+        returnAux = 0;
+    }
+
     return returnAux;
 }
 
@@ -246,6 +272,18 @@ int al_clear(ArrayList* this)
 ArrayList* al_clone(ArrayList* this)
 {
     ArrayList* returnAux = NULL;
+    ArrayList* newArray = NULL;
+    int i;
+
+    if(this != NULL)
+    {
+        newArray = al_newArrayList();
+        for(i = 0; i < this->len(this); i++)
+        {
+            newArray->add(newArray, this->get(this, i));
+        }
+        returnAux = newArray;
+    }
 
     return returnAux;
 }
@@ -263,6 +301,24 @@ ArrayList* al_clone(ArrayList* this)
 int al_push(ArrayList* this, int index, void* pElement)
 {
     int returnAux = -1;
+    int i;
+
+    if(this != NULL && pElement != NULL)
+    {
+        if(index >= 0 && index <= this->len(this))
+        {
+            al_add(this, pElement);
+            if(index != this->len(this))
+            {
+                for(i = index; i < this->len(this); i++)
+                {
+                    *(this->pElements+(i+1)) = *(this->pElements+i);
+                }
+                this->set(this, index, pElement);
+            }
+            returnAux = 0;
+        }
+    }
 
     return returnAux;
 }
@@ -277,6 +333,19 @@ int al_push(ArrayList* this, int index, void* pElement)
 int al_indexOf(ArrayList* this, void* pElement)
 {
     int returnAux = -1;
+    int i;
+
+    if(this != NULL && pElement != NULL)
+    {
+        for(i = 0; i < this->len(this); i++)
+        {
+            if(this->get(this, i) == pElement)
+            {
+                returnAux = i;
+                break;
+            }
+        }
+    }
 
     return returnAux;
 }
@@ -389,6 +458,16 @@ int resizeUp(ArrayList* this)
 int expand(ArrayList* this,int index)
 {
     int returnAux = -1;
+    int i;
+
+    if(this != NULL)
+    {
+        for(i = index; i < this->len(this); i++)
+        {
+            this->set(this, i+1, this->pElements+i);
+        }
+        returnAux = 0;
+    }
 
     return returnAux;
 }
