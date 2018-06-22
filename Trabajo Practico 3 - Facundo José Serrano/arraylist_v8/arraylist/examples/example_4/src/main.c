@@ -41,10 +41,10 @@ int main(void)
         //startTesting(11);//al_push
         //startTesting(12);//al_indexOf
         //startTesting(13);//al_isEmpty
-        startTesting(14);//al_pop
-        //startTesting(15);
-        //startTesting(16);
-        //startTesting(17);
+        //startTesting(14);//al_pop
+        //startTesting(15);//al_subList
+        //startTesting(16);//al_containsAll
+        startTesting(17);//al_sort
 
     return 0;
 }

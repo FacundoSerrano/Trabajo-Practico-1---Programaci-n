@@ -162,7 +162,9 @@ int al_contains(ArrayList* this, void* pElement)
 
     if(this != NULL && pElement != NULL)
     {
-        for(i = 0; i < this->len(this); i++)
+        int len = this->len(this);
+
+        for(i = 0; i < len; i++)
         {
             if(this->get(this, i) == pElement)
             {
@@ -325,7 +327,9 @@ int al_indexOf(ArrayList* this, void* pElement)
 
     if(this != NULL && pElement != NULL)
     {
-        for(i = 0; i < this->len(this); i++)
+        int len = this->len(this);
+
+        for(i = 0; i < len; i++)
         {
             if(this->get(this, i) == pElement)
             {
@@ -376,6 +380,17 @@ void* al_pop(ArrayList* this,int index)
 {
     void* returnAux = NULL;
 
+    if(this != NULL)
+    {
+        int len = this->len(this);
+
+        if(index >= 0 && index < len )
+        {
+            returnAux = this->get(this,index);
+            this->remove(this,index);
+        }
+    }
+
     return returnAux;
 }
 
@@ -390,7 +405,25 @@ void* al_pop(ArrayList* this,int index)
  */
 ArrayList* al_subList(ArrayList* this,int from,int to)
 {
-    void* returnAux = NULL;
+    ArrayList* returnAux = NULL;
+    ArrayList* nuevoArray;
+    int i;
+
+    if(this != NULL)
+    {
+        int len = this->len(this);
+
+        if(from >= 0 && to <= len && to >= from)
+        {
+            nuevoArray = al_newArrayList();
+
+            for(i = from; i <= to; i++)
+            {
+                nuevoArray->add(nuevoArray, this->get(this, i));
+            }
+            returnAux = nuevoArray;
+        }
+    }
 
     return returnAux ;
 }
@@ -405,6 +438,34 @@ ArrayList* al_subList(ArrayList* this,int from,int to)
 int al_containsAll(ArrayList* this,ArrayList* this2)
 {
     int returnAux = -1;
+    int i;
+    int e;
+    int flag = 0;
+    int contador = 0;
+
+    if(this != NULL && this2 != NULL)
+    {
+        int len = this->len(this);
+        int len2 = this2->len(this2);
+
+        for(i = 0; i < len2; i++)
+        {
+            for(e = 0; e< len; e++)
+            {
+                if(this2->get(this2, i) == this->get(this, e))
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+
+            if(flag == 0)
+            {
+                break;
+            }
+        }
+        returnAux = flag;
+    }
 
     return returnAux;
 }

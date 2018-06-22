@@ -200,7 +200,7 @@ void startTesting(int testGroup)
             utest_init();
             utest_startTest(fourteenthTestCase01,fourteenthTestSetup,">Case[Return of pop a valid Element]");
             utest_startTest(fourteenthTestCase02,fourteenthTestSetup,">Case[Return of pop a valid Elements]");
-            utest_startTest(fourteenthTestCase03,fourteenthTestSetup,">Case[Return of pop an not inclued Element]");
+            utest_startTest(fourteenthTestCase03,fourteenthTestSetup,">Case[Return of pop an not included Element]");
             utest_startTest(fourteenthTestCase04,fourteenthTestSetup,">Case[Return of pop with NULL pointer to array]");
             utest_startTest(fourteenthTestCase05,fourteenthTestSetup,">Case[Return of pop an invalid Element]");
             utest_printStatistics("al_pop()");
